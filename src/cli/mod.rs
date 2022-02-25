@@ -4,6 +4,7 @@ mod exec;
 mod info;
 mod log;
 mod run;
+pub mod version;
 #[cfg(feature = "backend-sev")]
 pub mod sev;
 

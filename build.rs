@@ -5,7 +5,13 @@ use std::fs;
 use std::os::unix::fs::FileTypeExt;
 use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
+use std::sync::LockResult;
+use cargo_lock::package::name;
 use walkdir::WalkDir;
+use cargo_lock::Lockfile;
+use std::fs::File;
+use std::io::prelude::*;
+
 
 const CRATE: &str = env!("CARGO_MANIFEST_DIR");
 const TEST_BINS_IN: &str = "tests/c-tests";
@@ -205,7 +211,37 @@ fn create(path: &Path) {
     }
 }
 
+fn version_file_write(text: String) -> std::io::Result<()> {
+    let mut file = File::create("src/cli/temp_crate_info.txt")?;
+    file.write_all(text.as_bytes())?;
+    Ok(())
+}
+
+fn crate_info_collection() {
+    // create file or env var
+    let lockfile = Lockfile::load("Cargo.lock").unwrap();
+
+     let mut iter = lockfile.packages.iter();
+     let sallyport_crate = iter.find(|x| x.name.to_string() == "sallyport");
+     let crate_sallyport = sallyport_crate.unwrap();
+
+    //putting checksum in string
+    //TODO: Move this somewhere else.
+    //let sallyport_checksum = crate_sallyport.checksum.to_string();
+
+
+     let file_contents = format!("\nCrate Name: {name} \n Version: {version} \n Checksum: {checksum:?}", name = crate_sallyport.name.to_string(), version = crate_sallyport.version.to_string(), checksum = crate_sallyport.checksum);
+     version_file_write(file_contents);
+
+     let mut file = File::open("src/cli/temp_crate_info.txt").expect("Unable to open the file");
+    let mut contents = String::new();
+    file.read_to_string(&mut contents).expect("Unable to read the file");
+}
+
+
 fn main() {
+    crate_info_collection();
+
     println!("cargo:rerun-if-env-changed=OUT_DIR");
     println!("cargo:rerun-if-env-changed=PROFILE");
 

@@ -1,0 +1,4 @@
+
+Crate Name: sallyport 
+ Version: 0.2.0 
+ Checksum: Some(Sha256(eab61195772feb0221de35deddc39ca51e04a3c9522af0ec47962415e8624987))
