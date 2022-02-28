@@ -1,17 +1,19 @@
+use cargo_lock::lockfile::version;
 // SPDX-License-Identifier: Apache-2.0
+use cargo_lock::package::name;
+use cargo_lock::Lockfile;
 use std::collections::HashMap;
 use std::ffi::OsStr;
 use std::fs;
+use std::fs::File;
+use std::fs::OpenOptions;
+use std::io::prelude::*;
+use std::io::Write;
 use std::os::unix::fs::FileTypeExt;
 use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
 use std::sync::LockResult;
-use cargo_lock::package::name;
 use walkdir::WalkDir;
-use cargo_lock::Lockfile;
-use std::fs::File;
-use std::io::prelude::*;
-
 
 const CRATE: &str = env!("CARGO_MANIFEST_DIR");
 const TEST_BINS_IN: &str = "tests/c-tests";
@@ -211,36 +213,53 @@ fn create(path: &Path) {
     }
 }
 
-fn version_file_write(text: String) -> std::io::Result<()> {
-    let mut file = File::create("src/cli/temp_crate_info.txt")?;
-    file.write_all(text.as_bytes())?;
-    Ok(())
+fn version_file_create(file_path: &str) {
+    //Create temporary file
+    let mut file = File::create(file_path).unwrap();
 }
 
-fn crate_info_collection() {
-    // create file or env var
+fn crate_info_collection(crate_name: &str) {
+    //Iterate through Cargo.lock packages until matching crate name is found.
     let lockfile = Lockfile::load("Cargo.lock").unwrap();
+    let mut iter = lockfile.packages.iter();
+    let searched_crate = iter.find(|x| x.name.to_string() == crate_name).unwrap();
 
-     let mut iter = lockfile.packages.iter();
-     let sallyport_crate = iter.find(|x| x.name.to_string() == "sallyport");
-     let crate_sallyport = sallyport_crate.unwrap();
+    //Open file to append the crate information.
+    let mut temp_file = OpenOptions::new()
+        .append(true)
+        .open("src/cli/temp_crate_info.txt")
+        .expect("cannot open file");
 
-    //putting checksum in string
-    //TODO: Move this somewhere else.
-    //let sallyport_checksum = crate_sallyport.checksum.to_string();
+    //Write crate information to a string.
+    let file_contents = format!(
+        "\nCrate Name: {name} \n Version: {version} \n Checksum: {checksum:?}\n",
+        name = searched_crate.name.to_string(),
+        version = searched_crate.version.to_string(),
+        checksum = searched_crate.checksum,
+    );
 
+    //Write string to specified temporary file.
+    temp_file.write_all(file_contents.as_bytes()).unwrap();
 
-     let file_contents = format!("\nCrate Name: {name} \n Version: {version} \n Checksum: {checksum:?}", name = crate_sallyport.name.to_string(), version = crate_sallyport.version.to_string(), checksum = crate_sallyport.checksum);
-     version_file_write(file_contents);
-
-     let mut file = File::open("src/cli/temp_crate_info.txt").expect("Unable to open the file");
+    //Read temporary file.
+    let mut file = File::open("src/cli/temp_crate_info.txt").expect("Unable to open the file");
     let mut contents = String::new();
-    file.read_to_string(&mut contents).expect("Unable to read the file");
+    file.read_to_string(&mut contents)
+        .expect("Unable to read the file");
 }
 
+fn crate_info_call() {
+    //Call explicitly defined subcrates here to get their information.
+    crate_info_collection("sallyport");
+    crate_info_collection("xsave");
+
+}
 
 fn main() {
-    crate_info_collection();
+    //Create temporary crate information file.
+    //Remove these two lines to stop information about specific subcrates showing in --version.
+    version_file_create("src/cli/temp_crate_info.txt");
+    crate_info_call();
 
     println!("cargo:rerun-if-env-changed=OUT_DIR");
     println!("cargo:rerun-if-env-changed=PROFILE");

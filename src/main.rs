@@ -80,14 +80,14 @@ mod cli;
 mod protobuf;
 mod workldr;
 
+use anyhow::Result;
 use backend::{Backend, Command};
+use cli::version;
+use log::info;
 use std::convert::TryInto;
 use std::fs::File;
 use std::os::unix::io::AsRawFd;
-use anyhow::Result;
-use log::info;
 use structopt::StructOpt;
-use cli::version;
 
 // This defines the toplevel `enarx` CLI
 #[derive(StructOpt, Debug)]
@@ -125,7 +125,7 @@ fn main() -> Result<()> {
 
             keep_exec(backend, backend.shim(), binary, gdblisten)
         }
-        
+
         cli::Command::Run(run) => {
             let modfile = File::open(run.module)?;
             let open_fd = modfile.as_raw_fd();
