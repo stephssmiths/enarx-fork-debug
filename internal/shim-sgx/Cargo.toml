@@ -29,7 +29,7 @@ noted = "^1.0.0"
 xsave = { version = "2.0.2" }
 rcrt1 = "1.0.0"
 lset = "0.3"
-sgx = "0.3"
+sgx = "0.4"
 
 [dev-dependencies]
 memoffset = "0.6.1"
