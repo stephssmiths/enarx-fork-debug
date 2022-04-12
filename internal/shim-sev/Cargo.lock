@@ -296,9 +296,9 @@ dependencies = [
 
 [[package]]
 name = "primordial"
-version = "0.4.0"
+version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b3146f8670eff948342703c5e866cdb6d092032207a7fc2dd53c4c3fef480cfe"
+checksum = "b24688c4d0374cf896ccde4b79d111d1c12e7b2ab6ec272c57aedc304cb1791d"
 
 [[package]]
 name = "proc-macro-crate"
