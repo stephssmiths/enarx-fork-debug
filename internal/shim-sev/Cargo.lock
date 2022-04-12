@@ -224,9 +224,9 @@ dependencies = [
 
 [[package]]
 name = "lset"
-version = "0.2.0"
+version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "efeae5282702b072b5e21cf8f430ccd3c5031c1e346321a28429523266c4a9b0"
+checksum = "3919d8ed5e9b055f0fd725e3f4c324052df3f8c893824a5fcbffea36356abfb5"
 
 [[package]]
 name = "managed"
