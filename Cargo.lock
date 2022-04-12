@@ -1206,9 +1206,9 @@ dependencies = [
 
 [[package]]
 name = "sgx"
-version = "0.3.0"
+version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "630f9b3f39cc5fbcdbcf881cccbfe6c574084fa04b45b38eaa5f433e91208a6c"
+checksum = "b36edd35c08990a7890efa046107de032a321c07b61e1a1b0ebbcbae673cdf08"
 dependencies = [
  "bitflags",
  "openssl",
