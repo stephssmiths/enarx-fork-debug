@@ -263,9 +263,9 @@ checksum = "ce31e24b01e1e524df96f1c2fdd054405f8d7376249a5110886fb4b658484789"
 
 [[package]]
 name = "sgx"
-version = "0.4.0"
+version = "0.4.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b36edd35c08990a7890efa046107de032a321c07b61e1a1b0ebbcbae673cdf08"
+checksum = "e1f19d6fdd241e6d507c924f95f9b86a90f13b52d84f7676f55114dba8175179"
 dependencies = [
  "bitflags",
  "x86_64",
