@@ -220,9 +220,9 @@ checksum = "f2cc38e8fa666e2de3c4aba7edeb5ffc5246c1c2ed0e3d17e560aeeba736b23f"
 
 [[package]]
 name = "sallyport"
-version = "0.4.0"
+version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "77d32884a5700fb9298473bb829536f523437523f410793ff3d64531e17b3927"
+checksum = "5edd8acfd57dec91b601fc384fff2a78114afb1d89dc89539c350e260544555a"
 dependencies = [
  "goblin",
 ]
