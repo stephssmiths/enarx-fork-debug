@@ -161,7 +161,7 @@ dependencies = [
  "const-default",
  "env_logger 0.9.0",
  "gdbstub",
- "goblin 0.5.2",
+ "goblin 0.5.3",
  "iocuddle",
  "kvm-bindings",
  "kvm-ioctls",
@@ -378,9 +378,9 @@ dependencies = [
 
 [[package]]
 name = "goblin"
-version = "0.5.2"
+version = "0.5.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cfeb764aa29a0774d290c2df134a37ab2e3c1ba59009162626658aabefda321a"
+checksum = "91766b1121940d622933a13e20665857648681816089c9bc2075c4b75a6e4f6b"
 dependencies = [
  "log",
  "plain",
@@ -1611,7 +1611,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7b6282a689cf2bdba1d1d0f73425894165549ab60ca2cd181580786592cbc9db"
 dependencies = [
  "crt0stack",
- "goblin 0.5.2",
+ "goblin 0.5.3",
 ]
 
 [[package]]
