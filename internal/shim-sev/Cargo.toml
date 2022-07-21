@@ -23,7 +23,7 @@ crt0stack = { version = "0.1", default-features = false }
 spinning = { version = "0.1", default-features = false }
 libc = { version = "0.2.126", default-features = false }
 primordial = "0.5"
-sallyport = { version = "0.6.0" }
+sallyport = { version = "0.6.1" }
 xsave = { version = "2.0.2" }
 noted = "1.0.0"
 nbytes = "0.1"
